@@ -5,7 +5,7 @@ SHELL := /bin/bash
 GO_VERSION=`cat GO_VERSION`
 DOCKER_BUILD_IMAGE=gotify/build
 DOCKER_WORKDIR=/proj
-DOCKER_RUN=docker run --rm -v "$$PWD/.:${DOCKER_WORKDIR}" -v "`go env GOPATH`/pkg/mod/.:/go/pkg/mod:ro" -w ${DOCKER_WORKDIR}
+DOCKER_RUN=docker run --platform linux/amd64 -d --rm -v "$$PWD/.:${DOCKER_WORKDIR}" -v "`go env GOPATH`/pkg/mod/.:/go/pkg/mod:ro" -w ${DOCKER_WORKDIR}
 DOCKER_GO_BUILD=go build -mod=readonly -a -installsuffix cgo -ldflags "$$LD_FLAGS"
 
 test: test-coverage test-race test-js
@@ -108,7 +108,7 @@ build-docker-arm64: require-version
 		-t ghcr.io/gotify/server-arm64:${VERSION} \
 		-t ghcr.io/gotify/server-arm64:$(shell echo $(VERSION) | cut -d '.' -f -2) \
 		-t ghcr.io/gotify/server-arm64:$(shell echo $(VERSION) | cut -d '.' -f -1) .
-	rm ${DOCKER_DIR}gotify-app
+	# rm ${DOCKER_DIR}gotify-app
 
 build-docker: build-docker-amd64 build-docker-arm-7 build-docker-arm64
 
