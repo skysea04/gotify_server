@@ -1,6 +1,6 @@
 LICENSE_DIR=./licenses/
 BUILD_DIR=./build
-DOCKER_DIR=./docker/
+DOCKER_DIR=.
 SHELL := /bin/bash
 GO_VERSION=`cat GO_VERSION`
 DOCKER_BUILD_IMAGE=gotify/build
